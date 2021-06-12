@@ -1,3 +1,4 @@
+/* header icons */
 .nav-icon .icon {
   display: flex;
   text-decoration: none;
@@ -23,4 +24,30 @@
   text-align: center;
   background-color: crimson;
   color: #fff;
+}
+
+/* Posts */
+.post-wrapper {
+  width: 100%;
+  margin: 50px 0;
+}
+
+.post-body {
+  width: 50%;
+  margin: auto;
+}
+
+.post-body .post-header {
+  background-color: darkcyan;
+  color: #fff;
+  height: 40px;
+  padding: 10px 0;
+  border-radius: 4px;
+}
+
+.post-body .post-text {
+  width: 100%;
+}
+
+.post-body .post-text textarea {
 }

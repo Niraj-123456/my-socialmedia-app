@@ -1,9 +1,10 @@
 import React from 'react'
+import Posts from './Posts'
 
 function Home() {
     return (
         <div>
-            This is a home page.
+            <Posts />
         </div>
     )
 }

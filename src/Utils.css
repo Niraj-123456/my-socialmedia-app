@@ -1,0 +1,26 @@
+.nav-icon .icon {
+  display: flex;
+  text-decoration: none;
+  color: #000;
+}
+
+.nav-icon .icon i:hover {
+  opacity: 0.5;
+  transform: scale(1.1, 1.1);
+}
+
+.nav-icon .btn:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.nav-icon .icon .badge-icon {
+  font-size: 9px;
+  height: 15px;
+  width: 15px;
+  margin-top: -7px;
+  margin-left: -1px;
+  border-radius: 50%;
+  text-align: center;
+  background-color: crimson;
+  color: #fff;
+}

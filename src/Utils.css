@@ -42,7 +42,7 @@
   color: #fff;
   height: 40px;
   padding: 10px 0;
-  border-radius: 4px;
+  border-radius: 4px 4px 0 0;
 }
 
 .post-body .post-text {
@@ -50,4 +50,24 @@
 }
 
 .post-body .post-text textarea {
+  border-radius: 0 0 4px 4px;
+}
+
+/* view post div */
+
+.viewpost-wrapper {
+  margin: 100px auto;
+  color: #000;
+}
+
+.main-viewpost {
+  width: 50%;
+  margin: auto;
+}
+
+.main-viewpost i {
+  font-size: 20px;
+}
+
+.main-viewpost p {
 }

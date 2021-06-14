@@ -1,5 +1,6 @@
+import firebase from 'firebase'
 // Your web app's Firebase configuration
-var firebaseConfig = {
+const firebaseConfig = {
     apiKey: "AIzaSyD9YK9KVuNmN1q-HfE3eewFOy98PwxDh_A",
     authDomain: "social-media-app-979b2.firebaseapp.com",
     projectId: "social-media-app-979b2",
@@ -8,4 +9,11 @@ var firebaseConfig = {
     appId: "1:453114933250:web:0acf134c69bcae378cb71b"
   };
   // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
+  const firebaseApp = firebase.initializeApp(firebaseConfig);
+  const db = firebaseApp.firestore();
+  const auth = firebase.auth();
+  const storage = firebase.storage();
+  const provider = new firebase.auth.GoogleAuthProvider();
+
+  export {auth, storage, provider};
+  export default db;

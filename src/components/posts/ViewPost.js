@@ -8,7 +8,7 @@ function ViewPost() {
                     <div className="row">
                         <div className="col d-flex">
                             <i className="fas fa-user-circle mx-2 p-3"></i>
-                            <p class="lead p-2">UserName</p>
+                            <p className="lead p-2">John Doe <small className="text-muted fs-6">- posted 1 min ago</small></p>
                         </div>
                         <div className="row">
                             <div className="col-md-11 ms-5 px-2">

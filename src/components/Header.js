@@ -23,6 +23,9 @@ function Header() {
                             <i className="fas fa-user-friends h5"></i>
                             <span className="badge-icon">1</span>
                         </a>
+                        <a role="button" className="icon mx-2">
+                            <i className="fas fa-sign-out-alt"></i>   
+                        </a> 
                     </div>
                 </div>
             </nav>

@@ -1,10 +1,11 @@
 import React from 'react'
-import Posts from './posts/Posts'
+import ViewPost from './posts/ViewPost'
 
 function Home() {
     return (
         <div>
-            <Posts />
+            {/* <ViewPost /> */}
+            This is home page.
         </div>
     )
 }

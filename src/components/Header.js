@@ -7,7 +7,7 @@ function Header() {
 
     const { user, logOut } = useContext(AuthContext);
     const history = useHistory();
-    console.log(user)
+
     const signOut = async () => {
         try{
             await logOut();
@@ -40,10 +40,14 @@ function Header() {
                             <i className="fas fa-user-friends h5"></i>
                             <span className="badge-icon">1</span>
                         </a>
-                        <a role="button" className="icon mx-2" onClick={signOut}>
-                            <i className="fas fa-sign-out-alt"></i>   
-                        </a>
-                        <p className="icon mx-2 text-uppercase">{user.displayName}</p>
+                        <div className="dropdown icon ms-5">
+                            <button className="btn btn-light btn-sm dropdown-toggle text-uppercase" href="#" role="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                {user.displayName}
+                            </button>
+                            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a className="dropdown-item" role="button" onClick={signOut}>LogOut</a></li>
+                            </ul>
+                        </div>
                         </>
                         : 
                         <Link to="/login" role="botton" className="btn btn-light icon mx-2">Login</Link>

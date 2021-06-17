@@ -1,5 +1,5 @@
 import React from 'react'
-import ViewPost from './posts/ViewPost'
+// import ViewPost from './posts/ViewPost'
 
 function Home() {
     return (

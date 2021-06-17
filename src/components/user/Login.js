@@ -1,27 +1,21 @@
-import React, { useState } from 'react'
-import { auth, provider } from '../../firebase'
+import React, { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
+import { AuthContext } from '../../features/useAuth'
 
 function Login() {
-    const [userName, setUserName] = useState('')
-    const [email, setEmail] = useState('')
-    const [photo, setPhoto] = useState('')
-
     const history = useHistory();
+    const { signInWithGoogle } = useContext(AuthContext);
 
-
-    const login = () => {
-        auth.signInWithPopup(provider)
-        .then((res) => {
-            let user = res.user;
-            setUserName(user.displayName);
-            setEmail(user.email);
-            setPhoto(user.photoURL);     
-        }).catch((error) => {
-            console.log(error.message);
-        })
-        history.push('/dashboard');
+    const login = async () => {
+        try {
+            await signInWithGoogle();
+            history.push('/dashboard')
+        } catch(error) {
+            console.log(error.message)
+            history.push('/login')
+        }
     }
+    
 
     return (
         <div className="container mt-5">

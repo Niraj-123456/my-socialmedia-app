@@ -6,28 +6,30 @@ import Dashboard from './components/Dashboard'
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from 'react-router-dom'
+import { AuthProvider } from './features/useAuth'
 
 function App() {
   return (
-    <div className="App">
-      <Router>
-        <Header />
-          <Switch>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/dashboard">
-              <Dashboard />
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
-          </Switch>
-      </Router>
+    <AuthProvider>
+      <div className="App">
+        <Router>  
+          <Header />
+            <Switch>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route path="/dashboard">
+                <Dashboard />
+              </Route>
+              <Route path="/">
+                <Home />
+              </Route>
+            </Switch>
+        </Router>
     </div>
+    </AuthProvider>
   );
 }
 

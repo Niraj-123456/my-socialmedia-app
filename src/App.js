@@ -2,6 +2,7 @@ import './App.css';
 import Home from './components/Home'
 import Header from './components/Header'
 import Login from './components/user/Login'
+import Register from './components/user/Register'
 import Dashboard from './components/Dashboard'
 import {
   BrowserRouter as Router,
@@ -17,6 +18,9 @@ function App() {
         <Router>  
           <Header />
             <Switch>
+              <Route path="/register">
+                <Register />
+              </Route>
               <Route path="/login">
                 <Login />
               </Route>

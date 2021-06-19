@@ -3,12 +3,14 @@ import WritePost from './WritePost'
 import ViewPost from './ViewPost'
 import db from '../../firebase'
 import { AuthContext } from '../../features/useAuth'
+import { useHistory } from 'react-router-dom'
 
 function Posts() {
     const [post, setPost] = useState([])
     const { user } = useContext(AuthContext);
     const dateAdded = new Date().toDateString();
     const [postBody, setPostBody] = useState('');
+    const history = useHistory();
 
     useEffect(() => {
         db.collection('posts').orderBy("addedDate", "desc").onSnapshot((snapshot) => {
@@ -41,13 +43,23 @@ function Posts() {
             })
     }
 
+    // const deletePost = (id) => {
+    //     db.collection('posts').doc(id).delete()
+    //     .then(() => {
+    //         console.log('Post with id ' + `${id}` + ' deleted successfully')
+    //         history.push('/dashboard')
+    //     }).catch((error) => {
+    //         console.log(error.message)
+    //     })
+    // }
+
     return (
         <div>
             <WritePost body={postBody} handleChange={handleChange} onSubmit={handlePostSubmit}/>
             {
                 post.map((postData) => {
                     return (
-                    <ViewPost key={postData.id} post={postData} user={user}/>
+                        <ViewPost key={postData.id} post={postData} user={user} />
                     )
                 })
             }

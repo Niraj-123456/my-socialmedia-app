@@ -1,20 +1,6 @@
 import React from 'react'
-import db from '../../firebase'
-import { useHistory } from 'react-router-dom'
 
 function ViewPost(props) {
-
-    const history = useHistory();
-
-    const deletePost = (id) => {
-        db.collection('posts').doc(id).delete()
-        .then(() => {
-            console.log("Post with id `${id}` deleted successfully")
-            history.push('/dashboard')
-        }).catch((error) => {
-            console.log(error.message)
-        })
-    }
 
     return (
         <div className="container mt-5">
@@ -43,7 +29,7 @@ function ViewPost(props) {
                             props.user.uid && props.post.user_id === props.user.uid ? 
                             <div>
                                 <button className="btn btn-sm btn-secondary m-2">Edit</button>
-                                <button className="btn btn-sm btn-danger m-2" onClick={() => deletePost(props.post.id)}>Delete</button>
+                                <button className="btn btn-sm btn-danger m-2">Delete</button>
                             </div>
                             :
                             ' '

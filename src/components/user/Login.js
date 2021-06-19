@@ -11,7 +11,6 @@ function Login() {
             await signInWithGoogle();
             history.push('/dashboard')
         } catch(error) {
-            console.log(error.message)
             history.push('/login')
         }
     }

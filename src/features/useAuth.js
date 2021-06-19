@@ -1,5 +1,6 @@
 import React, {useState, useEffect, createContext} from 'react'
 import { auth, provider } from '../firebase'
+import { useHistory } from 'react-router-dom'
 
 export const AuthContext = createContext();
 
@@ -8,6 +9,7 @@ export const AuthContext = createContext();
 // }
 
 export const AuthProvider = ({children}) => {
+    const history = useHistory();
     const [user, setUser] = useState(null);
     const [isAuthenticating, setIsAuthenticating] = useState(true);
 
@@ -34,11 +36,12 @@ export const AuthProvider = ({children}) => {
         .then((res) => {
                 setUser(res.user);
         }).catch((error) => {
-            console.log(error.message);
+            console.log(error.message)
+            history.push('/login')
         })
+        
     }
     
-
     const logOut = () => {
         return auth.signOut()
         .then(() => {

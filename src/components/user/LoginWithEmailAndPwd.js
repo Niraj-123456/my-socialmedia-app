@@ -7,7 +7,7 @@ function LoginWithEmailAndPwd() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const { isAuthenticating, loginUserWithEmailAndPwd } = useContext(AuthContext);
+    const { loginUserWithEmailAndPwd } = useContext(AuthContext);
     const history = useHistory();
 
     const onInputChanged = (e) => {
@@ -22,12 +22,8 @@ function LoginWithEmailAndPwd() {
     const loginWithEmailAndPwd = async (e) => {
         e.preventDefault();
         try {
-            if(!isAuthenticating){
-                await loginUserWithEmailAndPwd(email, password)
-                history.push('/dashboard');
-            } else {
-                history.push('/login')
-            }         
+            await loginUserWithEmailAndPwd(email, password)
+            history.push('/dashboard');     
         } catch(error) {
             console.log(error.message);
         }

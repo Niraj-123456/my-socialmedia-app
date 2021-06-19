@@ -1,5 +1,5 @@
 import React, {useState, useEffect, createContext} from 'react'
-import db, { auth, provider } from '../firebase'
+import { auth, provider } from '../firebase'
 
 export const AuthContext = createContext();
 
@@ -29,9 +29,15 @@ export const AuthProvider = ({children}) => {
         })
     }
 
-    const signInWithEmailAndPwd = () => {
-        console.log("clicked");
+    const loginUserWithEmailAndPwd = (email, password) => {
+        return auth.signInWithEmailAndPassword(email, password)
+        .then((res) => {
+                setUser(res.user);
+        }).catch((error) => {
+            console.log(error.message);
+        })
     }
+    
 
     const logOut = () => {
         return auth.signOut()
@@ -55,7 +61,7 @@ export const AuthProvider = ({children}) => {
         isAuthenticating,
         signInWithGoogle,
         registerUserWithEmailAndPwd,
-        signInWithEmailAndPwd,
+        loginUserWithEmailAndPwd,
         logOut
     }
 

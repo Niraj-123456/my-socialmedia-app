@@ -1,31 +1,33 @@
-import React, {useState, useContext} from 'react'
-import { useHistory } from 'react-router';
+import React, { useState, useContext } from 'react'
+import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../features/useAuth'
 
-function Register() {
+function LoginWithEmailAndPwd() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const { isAuthenticating, loginUserWithEmailAndPwd } = useContext(AuthContext);
     const history = useHistory();
 
     const onInputChanged = (e) => {
         const {name, value} = e.target;
-
         if(name === "email") {
             setEmail(value);
         } else if(name === "password") {
             setPassword(value)
-        }
+        }  
     }
 
-    const { registerUserWithEmailAndPwd } = useContext(AuthContext);
-
-    const registerUser = async (e) => {
+    const loginWithEmailAndPwd = async (e) => {
         e.preventDefault();
         try {
-            await registerUserWithEmailAndPwd(email, password);
-            history.push('/dashboard');
+            if(!isAuthenticating){
+                await loginUserWithEmailAndPwd(email, password)
+                history.push('/dashboard');
+            } else {
+                history.push('/login')
+            }         
         } catch(error) {
             console.log(error.message);
         }
@@ -37,10 +39,10 @@ function Register() {
                 <div className="col-md-6">
                     <div className="card">
                         <div className="card-header bg-primary text-light">
-                            Register
+                            Login
                         </div>
                         <div className="card-body">
-                            <form onSubmit={registerUser}>
+                            <form onSubmit={loginWithEmailAndPwd}>
                                 <div className="row mb-3">
                                     <label htmlFor="inputEmail3" className="col-sm-3 col-form-label">Email</label>
                                     <div className="col-sm-8">
@@ -53,7 +55,7 @@ function Register() {
                                         <input type="password" name="password" value={password} onChange={onInputChanged} className="form-control" id="inputPassword3" />
                                     </div>
                                 </div>
-                                <button type="submit" className="btn btn-primary">Register</button>
+                                <button type="submit" className="btn btn-primary">Login</button>
                             </form>
                         </div>
                     </div>
@@ -63,4 +65,4 @@ function Register() {
     )
 }
 
-export default Register
+export default LoginWithEmailAndPwd

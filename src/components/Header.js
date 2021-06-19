@@ -11,7 +11,7 @@ function Header() {
     const signOut = async () => {
         try{
             await logOut();
-            history.push('/')
+            history.push('/login')
         } catch(error) {
             console.log(error.message);
         }

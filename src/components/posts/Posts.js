@@ -18,6 +18,7 @@ function Posts() {
                 })
             )
         })  
+        // return setPost([]);
     }, [])
 
     const handleChange = (e) => {
@@ -31,6 +32,7 @@ function Posts() {
                 commentCounts: 2,
                 likeCounts: 3,
                 post: postBody,
+                user_id: user.uid,
                 user: user.displayName,
                 photoURL: user.photoURL
             }).then(() => {

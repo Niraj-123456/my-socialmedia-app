@@ -10,7 +10,7 @@ function ViewPost(props) {
                     </div>
                     <div className="col-md-8">
                         <div className="card-body">
-                            <h5 className="card-title">{props.post.user ? props.post.user : 'Anonymous'}</h5>
+                            <h5 className="card-title text-uppercase">{props.post.user ? props.post.user : 'Anonymous'}</h5>
                             <p className="card-text">{props.post.post}</p>
                             <p className="card-text"><small className="text-muted">{props.post.addedDate}</small></p>
                         </div>

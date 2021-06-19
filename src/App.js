@@ -4,6 +4,7 @@ import Header from './components/Header'
 import Login from './components/user/Login'
 import Register from './components/user/Register'
 import Dashboard from './components/Dashboard'
+import LoginWithEmailAndPwd from './components/user/LoginWithEmailAndPwd'
 import {
   BrowserRouter as Router,
   Switch,
@@ -23,6 +24,9 @@ function App() {
               </Route>
               <Route path="/login">
                 <Login />
+              </Route>
+              <Route path="/loginWithEmail&Pwd">
+                <LoginWithEmailAndPwd />
               </Route>
               <Route path="/dashboard">
                 <Dashboard />

@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Posts from './posts/Posts'
 
 function Dashboard() {
+
     return (
         <div>
-            <Posts />
+             <Posts /> 
         </div>
     )
 }

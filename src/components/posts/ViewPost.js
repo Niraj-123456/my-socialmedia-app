@@ -1,8 +1,28 @@
 import React from 'react'
+import db from '../../firebase'
+import { useHistory } from 'react-router-dom'
 
 function ViewPost(props) {
+
+    const history = useHistory();
+
+    const deletePost = (id) => {
+        db.collection('posts').doc(id).delete()
+        .then(() => {
+            console.log("Post with id `${id}` deleted successfully")
+            history.push('/dashboard')
+        }).catch((error) => {
+            console.log(error.message)
+        })
+    }
+
     return (
         <div className="container mt-5">
+            { props.post.post === 'null' ? 
+            <ul className="list-group">
+                <li className="list-group-item list-group-item-success">There is no post to show!!!</li>
+            </ul>        
+            :
             <div className="card mb-3 offset-1" style={{maxWidth: '940px'}}>
                 <div className="row g-0">
                     <div className="col-md-4">
@@ -14,12 +34,24 @@ function ViewPost(props) {
                             <p className="card-text">{props.post.post}</p>
                             <p className="card-text"><small className="text-muted">{props.post.addedDate}</small></p>
                         </div>
-                        <button className="btn btn-primary btn-sm mx-1">Like <span>{props.post.likeCounts}</span></button>
-                        <button className="btn btn-primary btn-sm">Comment <span>{props.post.commentCounts}</span></button>
-                        <button className="btn btn-primary btn-sm mx-1">Share</button>
+                        <div className="fs-4">
+                            <a href="#" className="btn btn-light"><i className="far fa-thumbs-up fs-3"></i></a><span>{props.post.likeCounts}</span>
+                            <a href="#" className="btn btn-light"><i className="far fa-comments fs-3"></i></a><span>{props.post.commentCounts}</span>
+                            <a href="#" className="btn btn-light"><i className="fas fa-share fs-3"></i></a>
+                        </div>
+                        {
+                            props.user.uid && props.post.user_id === props.user.uid ? 
+                            <div>
+                                <button className="btn btn-sm btn-secondary m-2">Edit</button>
+                                <button className="btn btn-sm btn-danger m-2" onClick={() => deletePost(props.post.id)}>Delete</button>
+                            </div>
+                            :
+                            ' '
+                        }
                     </div>
                 </div>
-            </div>
+            </div>    
+        }
         </div>
     )
 }

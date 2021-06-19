@@ -45,14 +45,18 @@ export const AuthProvider = ({children}) => {
     const logOut = () => {
         return auth.signOut()
         .then(() => {
-            setUser(null);
+            setUser('');
         })
     }
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
-            setUser(user);
-            setIsAuthenticating(false);
+            if(user) {
+                setUser(user);
+                setIsAuthenticating(false);
+            } else {
+                setUser(false);
+            }
         })
 
         // cleanup subscription on unmount

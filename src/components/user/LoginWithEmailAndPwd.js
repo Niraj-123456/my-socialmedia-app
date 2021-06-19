@@ -25,7 +25,7 @@ function LoginWithEmailAndPwd() {
             await loginUserWithEmailAndPwd(email, password)
             history.push('/dashboard');     
         } catch(error) {
-            console.log(error.message);
+            history.push('/login');
         }
     }
 

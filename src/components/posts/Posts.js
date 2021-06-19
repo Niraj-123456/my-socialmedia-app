@@ -18,7 +18,6 @@ function Posts() {
                 })
             )
         })  
-        // return setPost([]);
     }, [])
 
     const handleChange = (e) => {
@@ -46,13 +45,12 @@ function Posts() {
         <div>
             <WritePost body={postBody} handleChange={handleChange} onSubmit={handlePostSubmit}/>
             {
-                !post ? ' ' : post.map((postData) => {
+                post.map((postData) => {
                     return (
-                    <ViewPost key={postData.id} post={postData}/>
+                    <ViewPost key={postData.id} post={postData} user={user}/>
                     )
-                })   
+                })
             }
-            
         </div>
     )
 }

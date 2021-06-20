@@ -16,9 +16,9 @@ function App() {
   return (
     <AuthProvider>
       <div className="App">
-        <Router>  
+        <Router> 
           <Header />
-            <Switch>
+            <Switch> 
               <Route path="/register">
                 <Register />
               </Route>
@@ -33,10 +33,10 @@ function App() {
               </Route>
               <Route path="/">
                 <Home />
-              </Route>
-            </Switch>
+              </Route>      
+            </Switch>   
         </Router>
-    </div>
+      </div>
     </AuthProvider>
   );
 }

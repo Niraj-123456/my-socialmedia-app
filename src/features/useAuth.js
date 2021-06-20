@@ -11,7 +11,6 @@ export const AuthContext = createContext();
 export const AuthProvider = ({children}) => {
     const history = useHistory();
     const [user, setUser] = useState(null);
-    const [isAuthenticating, setIsAuthenticating] = useState(true);
 
     const signInWithGoogle = () => {
         return auth.signInWithPopup(provider)
@@ -45,7 +44,7 @@ export const AuthProvider = ({children}) => {
     const logOut = () => {
         return auth.signOut()
         .then(() => {
-            setUser('');
+            setUser(false);
         })
     }
 
@@ -53,7 +52,7 @@ export const AuthProvider = ({children}) => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
             if(user) {
                 setUser(user);
-                setIsAuthenticating(false);
+
             } else {
                 setUser(false);
             }
@@ -65,7 +64,6 @@ export const AuthProvider = ({children}) => {
 
     const values = {
         user,
-        isAuthenticating,
         signInWithGoogle,
         registerUserWithEmailAndPwd,
         loginUserWithEmailAndPwd,
@@ -74,7 +72,7 @@ export const AuthProvider = ({children}) => {
 
     return (
         <AuthContext.Provider value={values}>
-            {!isAuthenticating && children}
+            {children}
         </AuthContext.Provider>
     )
 }

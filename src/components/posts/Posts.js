@@ -28,6 +28,7 @@ function Posts() {
 
     const handlePostSubmit = (e) => {
         e.preventDefault();
+        try {
             db.collection('posts').add({
                 addedDate: dateAdded,
                 commentCounts: 2,
@@ -41,17 +42,21 @@ function Posts() {
             }).catch((error) => {
                 console.log(error.message);
             })
+        } catch(error) {
+            console.log('Something when wrong');
+            setPostBody('')
+        }      
     }
 
-    // const deletePost = (id) => {
-    //     db.collection('posts').doc(id).delete()
-    //     .then(() => {
-    //         console.log('Post with id ' + `${id}` + ' deleted successfully')
-    //         history.push('/dashboard')
-    //     }).catch((error) => {
-    //         console.log(error.message)
-    //     })
-    // }
+    const deletePost = (id) => {
+        db.collection('posts').doc(id).delete()
+        .then(() => {
+            console.log(`Post with id ${id} deleted successfully`)
+            history.push('/dashboard')
+        }).catch((error) => {
+            console.log(error.message)
+        })
+    }
 
     return (
         <div>
@@ -59,7 +64,7 @@ function Posts() {
             {
                 post.map((postData) => {
                     return (
-                        <ViewPost key={postData.id} post={postData} user={user} />
+                        <ViewPost key={postData.id} post={postData} user={user} onDeletePost={deletePost} />
                     )
                 })
             }

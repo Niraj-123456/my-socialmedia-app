@@ -28,7 +28,7 @@ function ViewPost(props) {
                         {
                             props.user.uid && props.post.user_id === props.user.uid ? 
                             <div>
-                                <button className="btn btn-sm btn-secondary m-2">Edit</button>
+                                <button className="btn btn-sm btn-secondary m-2" onClick={() => props.onUpdatePost(props.post.id)}>Edit</button>
                                 <button className="btn btn-sm btn-danger m-2" onClick={() => props.onDeletePost(props.post.id)}>Delete</button>
                             </div>
                             :

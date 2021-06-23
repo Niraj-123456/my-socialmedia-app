@@ -1,9 +1,12 @@
 import React from 'react'
 
 function WritePost(props) {
+
     return (
         <div className="container mt-5">
-        { props.user_id === 'null' ? ' ' 
+        { props.user_id === 'null' ? 
+        
+        ' ' 
         
         : 
         

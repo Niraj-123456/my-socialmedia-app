@@ -31,8 +31,8 @@ function Posts() {
         try {
             db.collection('posts').add({
                 addedDate: dateAdded,
-                commentCounts: 2,
-                likeCounts: 3,
+                commentCounts: 0,
+                likeCounts: 0,
                 post: postBody,
                 user_id: user.uid,
                 user: user.displayName,
@@ -47,6 +47,14 @@ function Posts() {
             setPostBody('')
         }      
     }
+
+    const updatePost = (id) => {
+            db.collection('posts').doc(id).get()
+            .then((snapshot) => {
+                setPostBody(snapshot.data().post)
+                console.log(snapshot.data().post);
+            })
+}
 
     const deletePost = (id) => {
         db.collection('posts').doc(id).delete()
@@ -64,7 +72,7 @@ function Posts() {
             {
                 post.map((postData) => {
                     return (
-                        <ViewPost key={postData.id} post={postData} user={user} onDeletePost={deletePost} />
+                        <ViewPost key={postData.id} post={postData} user={user} onDeletePost={deletePost} onUpdatePost={updatePost} />
                     )
                 })
             }

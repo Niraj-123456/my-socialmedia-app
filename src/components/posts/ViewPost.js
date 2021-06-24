@@ -4,9 +4,9 @@ function ViewPost(props) {
 
     return (
         <div className="container mt-5">
-            { props.post.post === 'null' ? 
+            { props.post.post === ' ' ? 
             <ul className="list-group">
-                <li className="list-group-item list-group-item-success">There is no post to show!!!</li>
+                <li className="list-group-item list-group-item-success text-dark">There is no post to show!!!</li>
             </ul>        
             :
             <div className="card mb-3 offset-1" style={{maxWidth: '940px'}}>

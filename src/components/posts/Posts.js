@@ -10,6 +10,7 @@ function Posts() {
     const { user } = useContext(AuthContext);
     const dateAdded = new Date().toDateString();
     const [postBody, setPostBody] = useState('');
+    const [id, setId] = useState('');
     const history = useHistory();
 
     useEffect(() => {
@@ -21,6 +22,7 @@ function Posts() {
             )
         })  
     }, [])
+    console.log(post);
 
     const handleChange = (e) => {
         setPostBody(e.target.value)
@@ -29,19 +31,30 @@ function Posts() {
     const handlePostSubmit = (e) => {
         e.preventDefault();
         try {
-            db.collection('posts').add({
-                addedDate: dateAdded,
-                commentCounts: 0,
-                likeCounts: 0,
-                post: postBody,
-                user_id: user.uid,
-                user: user.displayName,
-                photoURL: user.photoURL
-            }).then(() => {
-                setPostBody('')
-            }).catch((error) => {
-                console.log(error.message);
-            })
+            if (id === '') {
+                db.collection('posts').add({
+                    addedDate: dateAdded,
+                    commentCounts: 0,
+                    likeCounts: 0,
+                    post: postBody,
+                    user_id: user.uid,
+                    user: user.displayName,
+                    photoURL: user.photoURL
+                }).then(() => {
+                    setPostBody('')
+                }).catch((error) => {
+                    console.log(error.message);
+                })
+            } else {
+                db.collection('posts').doc(id).update(
+                    {post: postBody}
+                ).then(() => {
+                    setPostBody('')
+                    setId('')
+                }).catch((error) => {
+                    console.log(error.message);
+                })
+            }
         } catch(error) {
             console.log('Something when wrong');
             setPostBody('')
@@ -51,10 +64,10 @@ function Posts() {
     const updatePost = (id) => {
             db.collection('posts').doc(id).get()
             .then((snapshot) => {
-                setPostBody(snapshot.data().post)
-                console.log(snapshot.data().post);
+                setPostBody(snapshot.data().post)       
+                setId(snapshot.id)
             })
-}
+    }
 
     const deletePost = (id) => {
         db.collection('posts').doc(id).delete()
@@ -66,15 +79,17 @@ function Posts() {
         })
     }
 
+    const viewPost = !post ? '' : post.map((postData) => {
+        return (
+            <ViewPost key={postData.id} post={postData} user={user} onDeletePost={deletePost} onUpdatePost={updatePost} />
+        )
+    })
+
     return (
         <div>
-            <WritePost body={postBody} handleChange={handleChange} onSubmit={handlePostSubmit}/>
+            <WritePost body={postBody} handleChange={handleChange} onSubmit={handlePostSubmit} id={id}/>
             {
-                post.map((postData) => {
-                    return (
-                        <ViewPost key={postData.id} post={postData} user={user} onDeletePost={deletePost} onUpdatePost={updatePost} />
-                    )
-                })
+                viewPost
             }
         </div>
     )

@@ -2,7 +2,7 @@ import React from 'react'
 
 function WritePost(props) {
     return (
-        <div className="container mt-5">
+        <div className="container mt-5" id="write-post">
         <form onSubmit={props.onSubmit}>
             <div className="card text-white mb-3 col-md-8 offset-2">
                 <div className="card-header bg-primary">Write Your Post</div>  

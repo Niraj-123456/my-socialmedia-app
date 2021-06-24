@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-scroll'
 
 function ViewPost(props) {
 
@@ -28,7 +29,7 @@ function ViewPost(props) {
                         {
                             props.user.uid && props.post.user_id === props.user.uid ? 
                             <div>
-                                <button className="btn btn-sm btn-secondary m-2" onClick={() => props.onUpdatePost(props.post.id)}>Edit</button>
+                                <Link to="write-post" smooth={true} offset={-20} duration={500}><button className="btn btn-sm btn-secondary m-2" onClick={() => props.onUpdatePost(props.post.id)}>Edit</button></Link>
                                 <button className="btn btn-sm btn-danger m-2" onClick={() => props.onDeletePost(props.post.id)}>Delete</button>
                             </div>
                             :

@@ -1,17 +1,24 @@
 import React, { useState } from "react";
 import { Link } from "react-scroll";
+import Comment from "./Comment";
 
 function ViewPost(props) {
-  const [like, setLike] = useState(0);
-  // handle like button press action
-  const onLikeBtnClicked = (id) => {
-    console.log(`Like Button with post id ${id} pressed.`);
-    setLike(like + 1);
+  const [comment, setComment] = useState("");
+
+  // handle comment input change
+  const onCommentChange = (e) => {
+    setComment(e.target.value);
+  };
+
+  // handle comment submit
+  const onCommentSubmit = (e) => {
+    e.preventDefault();
+    console.log(comment);
   };
 
   return (
     <div className="container mt-5">
-      {props.post.post === " " ? (
+      {props.post === " " ? (
         <ul className="list-group">
           <li className="list-group-item list-group-item-success text-dark">
             There is no post to show!!!
@@ -45,15 +52,16 @@ function ViewPost(props) {
                 <a
                   href="#"
                   className="btn btn-light"
-                  onClick={() => onLikeBtnClicked(props.post.id)}
+                  role="button"
+                  onClick={props.onLikeBtnPressed}
                 >
                   <i className="far fa-thumbs-up fs-3"></i>
                 </a>
-                <span>{like}</span>
+                <span>{props.post.likeCount}</span>
                 <a href="#" className="btn btn-light">
                   <i className="far fa-comments fs-3"></i>
                 </a>
-                <span>{props.post.commentCounts}</span>
+                <span>0</span>
                 <a href="#" className="btn btn-light">
                   <i className="fas fa-share fs-3"></i>
                 </a>
@@ -68,14 +76,14 @@ function ViewPost(props) {
                   >
                     <button
                       className="btn btn-sm btn-secondary m-2"
-                      onClick={() => props.onUpdatePost(props.post.id)}
+                      onClick={props.onUpdatePost}
                     >
                       Edit
                     </button>
                   </Link>
                   <button
                     className="btn btn-sm btn-danger m-2"
-                    onClick={() => props.onDeletePost(props.post.id)}
+                    onClick={props.onDeletePost}
                   >
                     Delete
                   </button>
@@ -83,6 +91,13 @@ function ViewPost(props) {
               ) : (
                 " "
               )}
+            </div>
+            <div className="col-md-8 offset-4 my-2">
+              <Comment
+                comment={comment}
+                onCommentChange={onCommentChange}
+                onCommentSubmit={onCommentSubmit}
+              />
             </div>
           </div>
         </div>

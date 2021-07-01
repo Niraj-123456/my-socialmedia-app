@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-scroll";
 import Comment from "./Comment";
+import db from "../../firebase";
+import ShowComments from "../ShowComments";
 
 function ViewPost(props) {
   const [comment, setComment] = useState("");
+  const [showComment, setShowComment] = useState([]);
 
   // handle comment input change
   const onCommentChange = (e) => {
@@ -13,8 +16,48 @@ function ViewPost(props) {
   // handle comment submit
   const onCommentSubmit = (e) => {
     e.preventDefault();
-    console.log(comment);
+    try {
+      db.collection("comments")
+        .add({
+          comment: comment,
+          post_id: props.post.id,
+          user_id: props.user.uid,
+          user: props.user.displayName ? props.user.displayName : "Anonymous",
+          addedDate: new Date().toLocaleString(),
+        })
+        .then(() => {
+          setComment("");
+        });
+    } catch (error) {
+      console.log(error.message);
+    }
   };
+
+  // fetch comments for the specific post
+  useEffect(() => {
+    db.collection("comments")
+      .orderBy("addedDate", "desc")
+      .onSnapshot((snapshot) => {
+        setShowComment(
+          snapshot.docs.map((doc) => {
+            return { id: doc.id, ...doc.data() };
+          })
+        );
+      });
+  }, []);
+
+  const allComments =
+    showComment === null
+      ? ""
+      : showComment.map((comments) => {
+          return (
+            <ShowComments
+              comment={comments}
+              key={comments.id}
+              postId={props.post.id}
+            />
+          );
+        });
 
   return (
     <div className="container mt-5">
@@ -98,6 +141,9 @@ function ViewPost(props) {
                 onCommentChange={onCommentChange}
                 onCommentSubmit={onCommentSubmit}
               />
+            </div>
+            <div className="row justify-content-center mx-2">
+              <div className="col-md-12">{allComments}</div>
             </div>
           </div>
         </div>

@@ -43,6 +43,7 @@ function Posts() {
             addedDate: dateAdded,
             post: postBody,
             likeCount: 0,
+            commentCount: 0,
             user_id: user.uid,
             user: user.displayName ? user.displayName : "",
             photoURL: user.photoURL ? user.photoURL : "",

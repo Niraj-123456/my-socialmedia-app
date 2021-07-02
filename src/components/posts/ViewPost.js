@@ -50,12 +50,10 @@ function ViewPost(props) {
     showComment === null
       ? ""
       : showComment.map((comments) => {
-          return (
-            <ShowComments
-              comment={comments}
-              key={comments.id}
-              postId={props.post.id}
-            />
+          return comments.post_id === props.post.id ? (
+            <ShowComments comment={comments} key={comments.id} />
+          ) : (
+            ""
           );
         });
 
@@ -142,9 +140,7 @@ function ViewPost(props) {
                 onCommentSubmit={onCommentSubmit}
               />
             </div>
-            <div className="row justify-content-center mx-2">
-              <div className="col-md-12">{allComments}</div>
-            </div>
+            <div className="row justify-content-center mx-2">{allComments}</div>
           </div>
         </div>
       )}

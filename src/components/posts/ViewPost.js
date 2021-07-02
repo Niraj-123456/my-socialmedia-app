@@ -23,6 +23,7 @@ function ViewPost(props) {
           post_id: props.post.id,
           user_id: props.user.uid,
           user: props.user.displayName ? props.user.displayName : "Anonymous",
+          user_photo: props.user.photoURL,
           addedDate: new Date().toLocaleString(),
         })
         .then(() => {
@@ -68,7 +69,7 @@ function ViewPost(props) {
       ) : (
         <div className="card mb-3 offset-1" style={{ maxWidth: "940px" }}>
           <div className="row g-0">
-            <div className="col-md-4">
+            <div className="col-md-12">
               <img
                 src={
                   props.post.photoURL
@@ -79,7 +80,9 @@ function ViewPost(props) {
                 style={{ width: "100%", height: "100%" }}
               />
             </div>
-            <div className="col-md-8">
+          </div>
+          <div className="row g-0">
+            <div className="col-md-12">
               <div className="card-body">
                 <h5 className="card-title text-uppercase">
                   {props.post.user ? props.post.user : "Anonymous"}
@@ -133,15 +136,17 @@ function ViewPost(props) {
                 " "
               )}
             </div>
-            <div className="col-md-8 offset-4 my-2">
+          </div>
+          <div className="row g-0 justify-content-center my-2">
+            <div className="col-md-10">
               <Comment
                 comment={comment}
                 onCommentChange={onCommentChange}
                 onCommentSubmit={onCommentSubmit}
               />
             </div>
-            <div className="row justify-content-center mx-2">{allComments}</div>
           </div>
+          <div className="row my-3 justify-content-center">{allComments}</div>
         </div>
       )}
     </div>

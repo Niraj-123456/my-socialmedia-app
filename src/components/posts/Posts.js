@@ -11,7 +11,6 @@ function Posts() {
   const dateAdded = new Date().toDateString();
   const [postBody, setPostBody] = useState("");
   const [id, setId] = useState("");
-  const [likeCount, setLikeCount] = useState(0);
   const history = useHistory();
 
   // fetch all post data in user's dashboard
@@ -97,45 +96,6 @@ function Posts() {
       });
   };
 
-  // handle like button press action
-  const onLikeBtnClicked = (id) => {
-    //post like info
-    db.collection("postLikes").add({
-      likeCount: 1,
-      post_id: id,
-      user: user.displayName ? user.displayName : "",
-      user_id: user.uid,
-      likedDate: new Date().toLocaleString(),
-    });
-
-    //get like counts for particular post
-    db.collection("postLikes")
-      .where("post_id", "==", id)
-      .get()
-      .then((snapshot) => {
-        snapshot.docs.map((doc) => {
-          let count = 0;
-          if (doc.data().likeCount > 0) {
-            count = count + 1;
-          }
-          console.log(count);
-        });
-      });
-
-    //update the like counts in post collection
-    db.collection("posts")
-      .doc(id)
-      .update({
-        likeCount: 0,
-      })
-      .then(() => {
-        // setLikeCount(0);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
-
   const viewPost =
     post === []
       ? null
@@ -147,7 +107,6 @@ function Posts() {
               user={user}
               onDeletePost={() => deletePost(postData.id)}
               onUpdatePost={() => updatePost(postData.id)}
-              onLikeBtnPressed={() => onLikeBtnClicked(postData.id)}
             />
           );
         });

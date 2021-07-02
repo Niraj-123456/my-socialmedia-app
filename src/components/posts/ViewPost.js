@@ -2,15 +2,52 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-scroll";
 import Comment from "./Comment";
 import db from "../../firebase";
-import ShowComments from "../ShowComments";
+import ShowComments from "./ShowComments";
+import LCS from "../LCS";
 
 function ViewPost(props) {
   const [comment, setComment] = useState("");
+  const [likeCount, setLikeCount] = useState(props.post.likeCount);
   const [showComment, setShowComment] = useState([]);
 
   // handle comment input change
   const onCommentChange = (e) => {
     setComment(e.target.value);
+  };
+
+  // handle like button press action
+  const onLikeBtnClicked = (id) => {
+    //post like info
+    db.collection("postLikes").add({
+      likeCount: 1,
+      post_id: id,
+      user: props.user.displayName ? props.user.displayName : "",
+      user_id: props.user.uid,
+      likedDate: new Date().toLocaleString(),
+    });
+
+    //get like counts for particular post
+    // db.collection("postLikes")
+    //   .where("post_id", "==", id)
+    //   .get()
+    //   .then((snapshot) => {
+    //     snapshot.docs.map((doc) => {
+    //       return { id: doc, ...doc.data() };
+    //     });
+    //   });
+
+    //increment like count with ever click
+    setLikeCount(likeCount + 1);
+
+    //update the like counts in post collection
+    db.collection("posts")
+      .doc(id)
+      .update({
+        likeCount: likeCount + 1,
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   };
 
   // handle comment submit
@@ -67,7 +104,7 @@ function ViewPost(props) {
           </li>
         </ul>
       ) : (
-        <div className="card mb-3 offset-1" style={{ maxWidth: "940px" }}>
+        <div className="card mb-3 offset-3" style={{ maxWidth: "540px" }}>
           <div className="row g-0">
             <div className="col-md-12">
               <img
@@ -92,24 +129,13 @@ function ViewPost(props) {
                   <small className="text-muted">{props.post.addedDate}</small>
                 </p>
               </div>
-              <div className="fs-4">
-                <a
-                  href="#"
-                  className="btn btn-light"
-                  role="button"
-                  onClick={props.onLikeBtnPressed}
-                >
-                  <i className="far fa-thumbs-up fs-3"></i>
-                </a>
-                <span>{props.post.likeCount}</span>
-                <a href="#" className="btn btn-light">
-                  <i className="far fa-comments fs-3"></i>
-                </a>
-                <span>0</span>
-                <a href="#" className="btn btn-light">
-                  <i className="fas fa-share fs-3"></i>
-                </a>
-              </div>
+
+              {/* Like Comment Share Component */}
+              <LCS
+                postLike={props.post.likeCount}
+                onLikeBtnPressed={() => onLikeBtnClicked(props.post.id)}
+              />
+
               {props.user.uid && props.post.user_id === props.user.uid ? (
                 <div>
                   <Link

@@ -29,7 +29,6 @@ function Header() {
                 <a
                   className="icon mx-2"
                   tabIndex="0"
-                  role="button"
                   data-bs-toggle="popover"
                   data-bs-trigger="focus"
                   title="Notifications"
@@ -50,7 +49,6 @@ function Header() {
                   <button
                     className="btn btn-light btn-sm dropdown-toggle text-uppercase"
                     href="#"
-                    role="button"
                     id="dropdownMenuButton1"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
@@ -62,11 +60,8 @@ function Header() {
                     aria-labelledby="dropdownMenuButton1"
                   >
                     <li>
-                      <a
-                        className="dropdown-item"
-                        role="button"
-                        onClick={signOut}
-                      >
+                      <a className="dropdown-item">My Profile</a>
+                      <a className="dropdown-item" onClick={signOut}>
                         LogOut
                       </a>
                     </li>
@@ -75,18 +70,10 @@ function Header() {
               </>
             ) : (
               <>
-                <Link
-                  to="/login"
-                  role="button"
-                  className="btn btn-light icon mx-2"
-                >
+                <Link to="/login" className="btn btn-light icon mx-2">
                   Login
                 </Link>
-                <Link
-                  to="/register"
-                  role="button"
-                  className="btn btn-light icon mx-2"
-                >
+                <Link to="/register" className="btn btn-light icon mx-2">
                   Register
                 </Link>
               </>

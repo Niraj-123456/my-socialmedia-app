@@ -4,7 +4,6 @@ function Comment(props) {
   return (
     <div>
       <form onSubmit={props.onCommentSubmit}>
-        <label htmlFor="comment">Comment</label>
         <input
           className="form-control"
           id="comment"

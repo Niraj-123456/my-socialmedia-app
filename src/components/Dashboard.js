@@ -6,7 +6,12 @@ import { useHistory } from "react-router-dom";
 function Dashboard() {
   const { user } = useContext(AuthContext);
   const history = useHistory();
-  return <div>{user ? <Posts /> : history.push("/login")}</div>;
+
+  return (
+    <div>
+      <Posts />
+    </div>
+  );
 }
 
 export default Dashboard;

@@ -4,7 +4,7 @@ import { AuthContext } from "../../features/useAuth";
 
 function Login() {
   const history = useHistory();
-  const { user, signInWithGoogle } = useContext(AuthContext);
+  const { signInWithGoogle } = useContext(AuthContext);
 
   const loginWithGoogle = async () => {
     try {

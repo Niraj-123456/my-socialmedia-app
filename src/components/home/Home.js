@@ -1,4 +1,3 @@
-import { catchClause } from "@babel/types";
 import React from "react";
 // import ViewPost from './posts/ViewPost'
 import { Link } from "react-router-dom";
@@ -20,7 +19,11 @@ function Home() {
               <p className="text-white">
                 You must be logged In to access the features of the app
               </p>
-              <Link to="/login" className="btn btn-primary">
+              <Link
+                to="/login"
+                className="btn text-light"
+                style={{ backgroundColor: "#6b5b95" }}
+              >
                 Go to Login page
               </Link>
             </div>
@@ -31,7 +34,7 @@ function Home() {
             className="card m-auto"
             style={{ width: "18rem", backgroundColor: "#92a8d1" }}
           >
-            <div class="card-body">
+            <div className="card-body">
               <p className="text-light">
                 Use your email and password to register to the system
               </p>

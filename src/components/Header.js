@@ -18,7 +18,10 @@ function Header() {
 
   return (
     <div>
-      <nav className="navbar navbar-light bg-light">
+      <nav
+        className="navbar navbar-dark"
+        style={{ backgroundColor: "#6b5b95" }}
+      >
         <div className="container">
           <a className="navbar-brand" href="#">
             <p>Social Media App</p>

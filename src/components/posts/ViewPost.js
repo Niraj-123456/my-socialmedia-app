@@ -8,6 +8,7 @@ import LCS from "../LCS";
 function ViewPost(props) {
   const [comment, setComment] = useState("");
   const [likeCount, setLikeCount] = useState(props.post.likeCount);
+  const [like, setLike] = useState();
   const [showComment, setShowComment] = useState([]);
 
   // handle comment input change
@@ -17,7 +18,7 @@ function ViewPost(props) {
 
   // handle like button press action
   const onLikeBtnClicked = (id) => {
-    //post like info
+    // post like info
     db.collection("postLikes").add({
       likeCount: 1,
       post_id: id,
@@ -27,14 +28,15 @@ function ViewPost(props) {
     });
 
     //get like counts for particular post
-    // db.collection("postLikes")
-    //   .where("post_id", "==", id)
-    //   .get()
-    //   .then((snapshot) => {
-    //     snapshot.docs.map((doc) => {
-    //       return { id: doc, ...doc.data() };
-    //     });
-    //   });
+    db.collection("postLikes")
+      .where("post_id", "==", id)
+      .onSnapshot((snapshot) => {
+        setLike(
+          snapshot.docs.map((doc) => {
+            return { id: doc.id, ...doc.data() };
+          })
+        );
+      });
 
     //increment like count with ever click
     setLikeCount(likeCount + 1);
@@ -132,6 +134,7 @@ function ViewPost(props) {
 
               {/* Like Comment Share Component */}
               <LCS
+                likeId={like}
                 postLike={props.post.likeCount}
                 onLikeBtnPressed={() => onLikeBtnClicked(props.post.id)}
               />

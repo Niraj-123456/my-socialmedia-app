@@ -9,7 +9,7 @@ function Dashboard() {
 
   return (
     <div>
-      <Posts />
+      {user ? <Posts /> : <h2>Please Login To Continue. Goto Login Page</h2>}
     </div>
   );
 }

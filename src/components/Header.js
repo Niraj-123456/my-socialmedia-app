@@ -37,15 +37,15 @@ function Header() {
                   title="Notifications"
                   data-bs-content="And here's some amazing content. It's very engaging. Right?"
                 >
-                  <i className="far fa-bell h5"></i>
+                  <i className="far fa-bell h5 text-light"></i>
                   <span className="badge-icon">1</span>
                 </a>
                 <a role="button" className="icon mx-2">
-                  <i className="fab fa-facebook-messenger h5"></i>
+                  <i className="fab fa-facebook-messenger h5 text-light"></i>
                   <span className="badge-icon">1</span>
                 </a>
                 <a role="button" className="icon mx-2">
-                  <i className="fas fa-user-friends h5"></i>
+                  <i className="fas fa-user-friends h5 text-light"></i>
                   <span className="badge-icon">1</span>
                 </a>
                 <div className="dropdown icon ms-5">

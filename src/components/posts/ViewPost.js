@@ -8,13 +8,24 @@ import LCS from "../LCS";
 function ViewPost(props) {
   const [comment, setComment] = useState("");
   const [likeCount, setLikeCount] = useState(props.post.likeCount);
-  const [like, setLike] = useState();
+  const [like, setLike] = useState([]);
   const [showComment, setShowComment] = useState([]);
 
-  // handle comment input change
-  const onCommentChange = (e) => {
-    setComment(e.target.value);
-  };
+  useEffect(() => {
+    //get like counts for particular post
+    async function fetchLikes() {
+      await db
+        .collection("postLikes")
+        .where("post_id", "==", props.post.id)
+        .get()
+        .then((snapshot) => {
+          snapshot.forEach((doc) => {
+            setLike(doc.data());
+          });
+        });
+    }
+    fetchLikes();
+  }, []);
 
   // handle like button press action
   const onLikeBtnClicked = (id) => {
@@ -26,17 +37,6 @@ function ViewPost(props) {
       user_id: props.user.uid,
       likedDate: new Date().toLocaleString(),
     });
-
-    //get like counts for particular post
-    db.collection("postLikes")
-      .where("post_id", "==", id)
-      .onSnapshot((snapshot) => {
-        setLike(
-          snapshot.docs.map((doc) => {
-            return { id: doc.id, ...doc.data() };
-          })
-        );
-      });
 
     //increment like count with ever click
     setLikeCount(likeCount + 1);
@@ -50,6 +50,11 @@ function ViewPost(props) {
       .catch((error) => {
         console.log(error.message);
       });
+  };
+
+  // handle comment input change
+  const onCommentChange = (e) => {
+    setComment(e.target.value);
   };
 
   // handle comment submit
@@ -106,7 +111,7 @@ function ViewPost(props) {
           </li>
         </ul>
       ) : (
-        <div className="card mb-3 offset-3" style={{ maxWidth: "540px" }}>
+        <div className="card mb-3 mx-auto" style={{ maxWidth: "540px" }}>
           <div className="row g-0">
             <div className="col-md-12">
               <img
@@ -134,7 +139,7 @@ function ViewPost(props) {
 
               {/* Like Comment Share Component */}
               <LCS
-                likeId={like}
+                liked={like}
                 postLike={props.post.likeCount}
                 onLikeBtnPressed={() => onLikeBtnClicked(props.post.id)}
               />

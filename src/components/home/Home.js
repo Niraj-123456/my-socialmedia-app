@@ -46,7 +46,7 @@ function Home() {
           </p>
           <div
             className="card m-auto mt-5"
-            style={{ width: "18rem", backgroundColor: "#92a8d1" }}
+            style={{ width: "18rem", backgroundColor: "#6b5b95" }}
           >
             <div className="card-body">
               <p className="text-light">

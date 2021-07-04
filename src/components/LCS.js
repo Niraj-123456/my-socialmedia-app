@@ -7,7 +7,14 @@ function LCS(props) {
   return (
     <div>
       <div className="fs-4">
-        <a className="btn btn-light" onClick={props.onLikeBtnPressed}>
+        <a
+          className={
+            user.uid === props.liked.user_id && props.liked.likeCount === 1
+              ? "btn btn-primary disabled"
+              : "btn btn-light"
+          }
+          onClick={props.onLikeBtnPressed}
+        >
           <i className="far fa-thumbs-up fs-3"></i>
         </a>
         <span>{props.postLike}</span>

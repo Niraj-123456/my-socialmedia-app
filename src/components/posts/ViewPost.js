@@ -80,15 +80,19 @@ function ViewPost(props) {
 
   // fetch comments for the specific post
   useEffect(() => {
-    db.collection("comments")
-      .orderBy("addedDate", "desc")
-      .onSnapshot((snapshot) => {
-        setShowComment(
-          snapshot.docs.map((doc) => {
-            return { id: doc.id, ...doc.data() };
-          })
-        );
-      });
+    async function fetchComment() {
+      await db
+        .collection("comments")
+        .orderBy("addedDate", "desc")
+        .onSnapshot((snapshot) => {
+          setShowComment(
+            snapshot.docs.map((doc) => {
+              return { id: doc.id, ...doc.data() };
+            })
+          );
+        });
+    }
+    fetchComment();
   }, []);
 
   const allComments =

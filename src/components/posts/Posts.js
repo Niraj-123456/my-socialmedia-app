@@ -6,6 +6,7 @@ import { AuthContext } from "../../features/useAuth";
 import { useHistory } from "react-router-dom";
 
 function Posts() {
+  const [loading, setLoading] = useState(true);
   const [post, setPost] = useState([]);
   const { user } = useContext(AuthContext);
   const dateAdded = new Date().toDateString();
@@ -15,15 +16,20 @@ function Posts() {
 
   // fetch all post data in user's dashboard
   useEffect(() => {
-    db.collection("posts")
-      .orderBy("addedDate", "desc")
-      .onSnapshot((snapshot) => {
-        setPost(
-          snapshot.docs.map((doc) => {
-            return { id: doc.id, ...doc.data() };
-          })
-        );
-      });
+    async function fetchPost() {
+      await db
+        .collection("posts")
+        .orderBy("addedDate", "desc")
+        .onSnapshot((snapshot) => {
+          setPost(
+            snapshot.docs.map((doc) => {
+              return { id: doc.id, ...doc.data() };
+            })
+          );
+        });
+    }
+    fetchPost();
+    setLoading(false);
   }, []);
 
   // get input value on change
@@ -105,6 +111,7 @@ function Posts() {
               key={postData.id}
               post={postData}
               user={user}
+              loading={loading}
               onDeletePost={() => deletePost(postData.id)}
               onUpdatePost={() => updatePost(postData.id)}
             />
@@ -119,7 +126,17 @@ function Posts() {
         onSubmit={handlePostSubmit}
         id={id}
       />
-      {viewPost !== null ? viewPost : <p>No Post To Show!!!</p>}
+      {!loading ? (
+        viewPost
+      ) : (
+        <div
+          className="spinner-border"
+          style={{ width: "3rem", height: "3rem" }}
+          role="status"
+        >
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      )}
     </div>
   );
 }

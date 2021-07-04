@@ -2,7 +2,7 @@ import React from "react";
 
 function ShowComments(props) {
   return (
-    <>
+    <div className="row my-2 justify-content-center">
       <div className="col-md-1">
         <img
           src={
@@ -28,7 +28,7 @@ function ShowComments(props) {
           Delete
         </a>
       </div>
-    </>
+    </div>
   );
 }
 

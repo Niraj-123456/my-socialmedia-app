@@ -175,16 +175,16 @@ function ViewPost(props) {
               )}
             </div>
           </div>
-          <div className="row g-0 justify-content-center my-2">
-            <div className="col-md-10">
-              <Comment
-                comment={comment}
-                onCommentChange={onCommentChange}
-                onCommentSubmit={onCommentSubmit}
-              />
-            </div>
-          </div>
-          <div className="row my-3 justify-content-center">{allComments}</div>
+
+          {/* Write comment component */}
+          <Comment
+            comment={comment}
+            onCommentChange={onCommentChange}
+            onCommentSubmit={onCommentSubmit}
+          />
+
+          {/* Show all comments related to a post */}
+          {allComments}
         </div>
       )}
     </div>

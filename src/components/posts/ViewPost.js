@@ -199,7 +199,9 @@ function ViewPost(props) {
           {/* Show all comments related to a post */}
           {allComments}
 
-          <div className="card-footer text-muted">{props.post.addedDate}</div>
+          <div className="card-footer text-muted text-start">
+            {props.post.addedDate}
+          </div>
         </div>
       )}
     </div>

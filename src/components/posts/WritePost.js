@@ -5,7 +5,9 @@ function WritePost(props) {
     <div className="container mt-5" id="write-post">
       <form onSubmit={props.onSubmit}>
         <div className="card text-white mb-3 col-md-8 offset-2">
-          <div className="card-header bg-primary">Write Your Post</div>
+          <div className="card-header" style={{ backgroundColor: "#6b5b95" }}>
+            Write Your Post
+          </div>
           <textarea
             value={props.body}
             className="form-control"

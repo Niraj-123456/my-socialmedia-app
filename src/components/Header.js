@@ -51,7 +51,7 @@ function Header() {
                 <div className="dropdown icon ms-5">
                   <button
                     className="btn btn-light btn-sm dropdown-toggle text-uppercase"
-                    href="#"
+                    type="button"
                     id="dropdownMenuButton1"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
@@ -63,8 +63,12 @@ function Header() {
                     aria-labelledby="dropdownMenuButton1"
                   >
                     <li>
-                      <a className="dropdown-item">My Profile</a>
-                      <a className="dropdown-item" onClick={signOut}>
+                      <a href="#" className="dropdown-item">
+                        My Profile
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" className="dropdown-item" onClick={signOut}>
                         LogOut
                       </a>
                     </li>

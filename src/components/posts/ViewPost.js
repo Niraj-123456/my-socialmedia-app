@@ -116,38 +116,51 @@ function ViewPost(props) {
         </ul>
       ) : (
         <div className="card mb-3 mx-auto" style={{ maxWidth: "540px" }}>
-          <div className="row g-0">
-            <div className="col-md-12">
-              <img
-                src={
-                  props.post.photoURL
-                    ? props.post.photoURL
-                    : "https://media.istockphoto.com/photos/cat-with-blue-eyes-looks-at-camera-picture-id1067347086?k=6&m=1067347086&s=612x612&w=0&h=aHrE1UPUHnRFESfIXNCT5uZg14Yus0LaYkK6YkLANOU="
-                }
-                alt="..."
-                style={{ width: "100%", height: "100%" }}
-              />
+          <div className="card-header">
+            <div className="row g-0 align-items-center">
+              <div className="col-md-2 p-1 text-start">
+                <img
+                  src={
+                    props.post.photoURL
+                      ? props.post.photoURL
+                      : "https://media.istockphoto.com/photos/cat-with-blue-eyes-looks-at-camera-picture-id1067347086?k=6&m=1067347086&s=612x612&w=0&h=aHrE1UPUHnRFESfIXNCT5uZg14Yus0LaYkK6YkLANOU="
+                  }
+                  alt="..."
+                  style={{ width: "30px", height: "30px", borderRadius: "50%" }}
+                />
+              </div>
+              <div className="col-md-8 p-1 fs-4 text-start text-capitalize">
+                {props.post.user ? props.post.user : "Anonymous"}
+              </div>
+              <div className="col-md-2">Action</div>
             </div>
           </div>
           <div className="row g-0">
             <div className="col-md-12">
               <div className="card-body">
-                <h5 className="card-title text-uppercase">
-                  {props.post.user ? props.post.user : "Anonymous"}
-                </h5>
-                <p className="card-text">{props.post.post}</p>
-                <p className="card-text">
-                  <small className="text-muted">{props.post.addedDate}</small>
-                </p>
+                <img
+                  src="http://www.mandysam.com/img/random.jpg"
+                  style={{ width: "100%" }}
+                />
               </div>
+            </div>
+          </div>
+          <div className="row g-0">
+            <div className="col-md-12 text-start p-3 fs-4">
+              {props.post.post}
+            </div>
+          </div>
 
-              {/* Like Comment Share Component */}
-              <LCS
-                liked={like}
-                postLike={props.post.likeCount}
-                onLikeBtnPressed={() => onLikeBtnClicked(props.post.id)}
-              />
+          {/* Like Comment Share Component */}
+          <LCS
+            liked={like}
+            postLike={props.post.likeCount}
+            onLikeBtnPressed={() => onLikeBtnClicked(props.post.id)}
+          />
 
+          {/* Edit or Delete post */}
+          <div className="row g-0">
+            <div className="col">
               {props.user.uid && props.post.user_id === props.user.uid ? (
                 <div>
                   <Link
@@ -185,6 +198,8 @@ function ViewPost(props) {
 
           {/* Show all comments related to a post */}
           {allComments}
+
+          <div className="card-footer text-muted">{props.post.addedDate}</div>
         </div>
       )}
     </div>

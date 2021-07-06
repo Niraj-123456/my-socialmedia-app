@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-scroll";
 import Comment from "./Comment";
 import db from "../../firebase";
 import ShowComments from "./ShowComments";
@@ -26,7 +25,7 @@ function ViewPost(props) {
         });
     }
     fetchLikes();
-  }, []);
+  }, [props.post.id]);
 
   // handle like button press action
   const onLikeBtnClicked = (id) => {
@@ -126,7 +125,7 @@ function ViewPost(props) {
                       ? props.post.photoURL
                       : "https://media.istockphoto.com/photos/cat-with-blue-eyes-looks-at-camera-picture-id1067347086?k=6&m=1067347086&s=612x612&w=0&h=aHrE1UPUHnRFESfIXNCT5uZg14Yus0LaYkK6YkLANOU="
                   }
-                  alt="..."
+                  alt=""
                   style={{ width: "30px", height: "30px", borderRadius: "50%" }}
                 />
               </div>
@@ -136,7 +135,7 @@ function ViewPost(props) {
 
               {/* Edit or Delete Post */}
               {props.user.uid && props.user.uid === props.post.user_id ? (
-                <div className="col-md-2">
+                <div className="col-md-2 text-end">
                   <EditOrDelete
                     updatePost={props.onUpdatePost}
                     deletePost={props.onDeletePost}
@@ -155,6 +154,7 @@ function ViewPost(props) {
                 <img
                   src="http://www.mandysam.com/img/random.jpg"
                   style={{ width: "100%" }}
+                  alt=""
                 />
               </div>
             </div>

@@ -4,14 +4,12 @@ function EditOrDelete(props) {
   return (
     <div className="dropdown">
       <button
-        className="btn btn-secondary dropdown-toggle"
+        className="btn btn-light dropdown-toggle"
         type="button"
         id="dropdownMenuButton1"
         data-bs-toggle="dropdown"
         aria-expanded="false"
-      >
-        Action
-      </button>
+      ></button>
       <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
         <li>
           <a href="#" className="dropdown-item" onClick={props.updatePost}>

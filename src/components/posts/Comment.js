@@ -12,6 +12,7 @@ function Comment(props) {
               ? user.photoURL
               : "https://media.istockphoto.com/photos/cat-with-blue-eyes-looks-at-camera-picture-id1067347086?k=6&m=1067347086&s=612x612&w=0&h=aHrE1UPUHnRFESfIXNCT5uZg14Yus0LaYkK6YkLANOU="
           }
+          alt=""
           style={{ width: "30px", height: "30px", borderRadius: "50%" }}
         />
       </div>

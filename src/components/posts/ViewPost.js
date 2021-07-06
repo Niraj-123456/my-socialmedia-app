@@ -3,6 +3,7 @@ import { Link } from "react-scroll";
 import Comment from "./Comment";
 import db from "../../firebase";
 import ShowComments from "./ShowComments";
+import EditOrDelete from "./EditOrDelete";
 import LCS from "../LCS";
 
 function ViewPost(props) {
@@ -132,9 +133,22 @@ function ViewPost(props) {
               <div className="col-md-8 p-1 fs-4 text-start text-capitalize">
                 {props.post.user ? props.post.user : "Anonymous"}
               </div>
-              <div className="col-md-2">Action</div>
+
+              {/* Edit or Delete Post */}
+              {props.user.uid && props.user.uid === props.post.user_id ? (
+                <div className="col-md-2">
+                  <EditOrDelete
+                    updatePost={props.onUpdatePost}
+                    deletePost={props.onDeletePost}
+                  />
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
+
+          {/* Post Image Section */}
           <div className="row g-0">
             <div className="col-md-12">
               <div className="card-body">
@@ -157,37 +171,6 @@ function ViewPost(props) {
             postLike={props.post.likeCount}
             onLikeBtnPressed={() => onLikeBtnClicked(props.post.id)}
           />
-
-          {/* Edit or Delete post */}
-          <div className="row g-0">
-            <div className="col">
-              {props.user.uid && props.post.user_id === props.user.uid ? (
-                <div>
-                  <Link
-                    to="write-post"
-                    smooth={true}
-                    offset={-20}
-                    duration={500}
-                  >
-                    <button
-                      className="btn btn-sm btn-secondary m-2"
-                      onClick={props.onUpdatePost}
-                    >
-                      Edit
-                    </button>
-                  </Link>
-                  <button
-                    className="btn btn-sm btn-danger m-2"
-                    onClick={props.onDeletePost}
-                  >
-                    Delete
-                  </button>
-                </div>
-              ) : (
-                " "
-              )}
-            </div>
-          </div>
 
           {/* Write comment component */}
           <Comment

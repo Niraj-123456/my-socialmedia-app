@@ -16,20 +16,24 @@ function Posts() {
 
   // fetch all post data in user's dashboard
   useEffect(() => {
+    let mounted = true;
     async function fetchPost() {
       await db
         .collection("posts")
         .orderBy("addedDate", "desc")
         .onSnapshot((snapshot) => {
-          setPost(
-            snapshot.docs.map((doc) => {
-              return { id: doc.id, ...doc.data() };
-            })
-          );
+          if (mounted) {
+            setPost(
+              snapshot.docs.map((doc) => {
+                return { id: doc.id, ...doc.data() };
+              })
+            );
+          }
         });
     }
     fetchPost();
     setLoading(false);
+    return () => (mounted = false);
   }, []);
 
   // get input value on change

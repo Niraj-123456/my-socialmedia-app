@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import WritePost from "./WritePost";
 import ViewPost from "./ViewPost";
 import db from "../../firebase";
+import { storage } from "../../firebase";
 import { AuthContext } from "../../features/useAuth";
 import { useHistory } from "react-router-dom";
 
@@ -11,6 +12,7 @@ function Posts() {
   const { user } = useContext(AuthContext);
   const dateAdded = new Date().toDateString();
   const [postBody, setPostBody] = useState("");
+  const [imgFile, setImgFile] = useState(null);
   const [id, setId] = useState("");
   const history = useHistory();
 
@@ -36,9 +38,14 @@ function Posts() {
     return () => (mounted = false);
   }, []);
 
-  // get input value on change
-  const handleChange = (e) => {
+  // get input post value on change
+  const handlePostChange = (e) => {
     setPostBody(e.target.value);
+  };
+
+  // get input post image on change
+  const handleImgChange = (e) => {
+    setImgFile(e.target.files[0]);
   };
 
   // method for handling post submit
@@ -47,24 +54,49 @@ function Posts() {
     try {
       // if post id is null then perform post method
       if (id === "") {
-        db.collection("posts")
-          .add({
-            addedDate: dateAdded,
-            post: postBody,
-            likeCount: 0,
-            commentCount: 0,
-            user_id: user.uid,
-            user: user.displayName ? user.displayName : "",
-            photoURL: user.photoURL ? user.photoURL : "",
-          })
-          .then(() => {
-            setPostBody("");
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
-        // if the post id is not null, then perform update post method
-      } else {
+        // upload image to firebase storage
+        const ref = storage.ref(`/images/${imgFile.name}`);
+        const uploadTask = ref.put(imgFile);
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            console.log(snapshot);
+          },
+          (err) => {
+            console.log(err.message);
+          },
+          () => {
+            storage
+              .ref("images")
+              .child(imgFile.name)
+              .getDownloadURL()
+              .then((url) => {
+                // add post with image
+                db.collection("posts")
+                  .add({
+                    addedDate: dateAdded,
+                    post: postBody,
+                    postImg: url ? url : "",
+                    likeCount: 0,
+                    commentCount: 0,
+                    user_id: user.uid,
+                    user: user.displayName ? user.displayName : "",
+                    photoURL: user.photoURL ? user.photoURL : "",
+                  })
+                  .then(() => {
+                    setPostBody("");
+                    setImgFile(null);
+                  })
+                  .catch((error) => {
+                    console.log(error.message);
+                  });
+              });
+          }
+        );
+      }
+
+      // if the post id is not null, then perform update post method
+      else {
         db.collection("posts")
           .doc(id)
           .update({ post: postBody })
@@ -89,6 +121,7 @@ function Posts() {
       .get()
       .then((snapshot) => {
         setPostBody(snapshot.data().post);
+        // setPostImg(snapshot.data().postImg);
         setId(snapshot.id);
       });
   };
@@ -126,7 +159,8 @@ function Posts() {
     <div>
       <WritePost
         body={postBody}
-        handleChange={handleChange}
+        onhandlePostChange={handlePostChange}
+        onhandleImgChange={handleImgChange}
         onSubmit={handlePostSubmit}
         id={id}
       />

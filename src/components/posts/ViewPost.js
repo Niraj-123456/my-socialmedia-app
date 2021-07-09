@@ -146,24 +146,29 @@ function ViewPost(props) {
               )}
             </div>
           </div>
-
-          {/* Post Image Section */}
+          {/* Post Caption Section */}
           <div className="row g-0">
-            <div className="col-md-12">
-              <div className="card-body">
-                <img
-                  src="http://www.mandysam.com/img/random.jpg"
-                  style={{ width: "100%" }}
-                  alt=""
-                />
-              </div>
-            </div>
-          </div>
-          <div className="row g-0">
-            <div className="col-md-12 text-start p-3 fs-4">
+            <div className="col-md-12 text-start p-3 fs-5">
               {props.post.post}
             </div>
           </div>
+
+          {/* Post Image Section */}
+          {props.post.postImg ? (
+            <div className="row g-0">
+              <div className="col-md-12">
+                <div className="card-body">
+                  <img
+                    src={props.post.postImg}
+                    style={{ width: "100%" }}
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
 
           {/* Like Comment Share Component */}
           <LCS

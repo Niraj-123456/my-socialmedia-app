@@ -17,7 +17,7 @@ function EditOrDelete(props) {
           </a>
         </li>
         <li>
-          <a className="dropdown-item" onClick={props.deletePost}>
+          <a href="#" className="dropdown-item" onClick={props.deletePost}>
             Delete
           </a>
         </li>

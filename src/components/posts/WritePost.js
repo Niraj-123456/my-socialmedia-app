@@ -26,6 +26,21 @@ function WritePost(props) {
           <label htmlFor="formFileSm" className="form-label text-start my-2">
             Upload Image
           </label>
+          {props.progress && (
+            <div className="progress my-1">
+              <div
+                className="progress-bar"
+                role="progressbar"
+                style={{ width: props.progress }}
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                {props.progress}
+              </div>
+            </div>
+          )}
+
           <input
             className="form-control form-control-sm"
             type="file"

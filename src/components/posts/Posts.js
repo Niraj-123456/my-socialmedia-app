@@ -16,6 +16,7 @@ function Posts() {
   const [imgFile, setImgFile] = useState(null);
   // const { imgUrl } = useStorage(imgFile);
   const [id, setId] = useState("");
+  const [progress, setProgress] = useState("");
   const history = useHistory();
 
   // fetch all post data in user's dashboard
@@ -62,7 +63,11 @@ function Posts() {
         uploadTask.on(
           "state_changed",
           (snapshot) => {
-            console.log(snapshot);
+            setProgress(
+              Math.floor(snapshot.bytesTransferred / snapshot.totalBytes) *
+                100 +
+                "%"
+            );
           },
           (err) => {
             console.log(err.message);
@@ -165,6 +170,7 @@ function Posts() {
         onhandleImgChange={handleImgChange}
         onSubmit={handlePostSubmit}
         id={id}
+        progress={imgFile && progress}
       />
       {!loading ? (
         viewPost

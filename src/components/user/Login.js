@@ -22,14 +22,16 @@ function Login() {
           <div className="card">
             <h5 className="card-header">Login</h5>
             <div className="card-body d-grid col-6 mx-auto gap-2">
+              <Link to="/loginWithEmail&Pwd" className="btn btn-secondary">
+                <i className="far fa-envelope mx-2"></i>Login with Email
+              </Link>
               <a href="#" className="btn btn-primary" onClick={loginWithGoogle}>
+                <i className="fab fa-google mx-2"></i>
                 Login with Google
               </a>
-              <Link to="/loginWithEmail&Pwd" className="btn btn-secondary">
-                Login with Email
-              </Link>
+
               <a href="#" className="btn btn-light">
-                Login with Apple
+                <i className="fab fa-apple mx-2"></i>Login with Apple
               </a>
             </div>
           </div>

@@ -3,6 +3,7 @@ import WritePost from "./WritePost";
 import ViewPost from "./ViewPost";
 import db from "../../firebase";
 import { storage } from "../../firebase";
+// import useStorage from "../../features/useStorage";
 import { AuthContext } from "../../features/useAuth";
 import { useHistory } from "react-router-dom";
 
@@ -13,6 +14,7 @@ function Posts() {
   const dateAdded = new Date().toDateString();
   const [postBody, setPostBody] = useState("");
   const [imgFile, setImgFile] = useState(null);
+  // const { imgUrl } = useStorage(imgFile);
   const [id, setId] = useState("");
   const history = useHistory();
 

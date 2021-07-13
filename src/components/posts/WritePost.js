@@ -46,6 +46,7 @@ function WritePost(props) {
             type="file"
             id="formFile"
             onChange={props.onhandleImgChange}
+            required
           />
         </div>
         <input

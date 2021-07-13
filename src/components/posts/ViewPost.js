@@ -1,15 +1,51 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Comment from "./Comment";
 import db from "../../firebase";
 import ShowComments from "./ShowComments";
 import EditOrDelete from "./EditOrDelete";
+import { AuthContext } from "../../features/useAuth";
 import LCS from "../LCS";
 
 function ViewPost(props) {
+  const { user } = useContext(AuthContext);
   const [comment, setComment] = useState("");
   const [likeCount, setLikeCount] = useState(props.post.likeCount);
   const [like, setLike] = useState([]);
   const [showComment, setShowComment] = useState([]);
+
+  // handle like button press action
+  const onLikeBtnClicked = (id) => {
+    // post like info
+    db.collection("postLikes")
+      .add({
+        likeCount: 1,
+        post_id: id,
+        user: user.displayName ? user.displayName : "",
+        user_id: user.uid,
+        likedDate: new Date().toLocaleString(),
+      })
+      .then(() => {
+        //increment like count with ever click
+        setLikeCount(likeCount + 1);
+      })
+      .then(() => {
+        //update the like counts in post collection
+        db.collection("posts")
+          .doc(id)
+          .update({
+            likeCount: likeCount + 1,
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+      })
+      .then(() => {
+        setLike("");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
 
   useEffect(() => {
     //get like counts for particular post
@@ -26,31 +62,6 @@ function ViewPost(props) {
     }
     fetchLikes();
   }, [props.post.id]);
-
-  // handle like button press action
-  const onLikeBtnClicked = (id) => {
-    // post like info
-    db.collection("postLikes").add({
-      likeCount: 1,
-      post_id: id,
-      user: props.user.displayName ? props.user.displayName : "",
-      user_id: props.user.uid,
-      likedDate: new Date().toLocaleString(),
-    });
-
-    //increment like count with ever click
-    setLikeCount(likeCount + 1);
-
-    //update the like counts in post collection
-    db.collection("posts")
-      .doc(id)
-      .update({
-        likeCount: likeCount + 1,
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
 
   // handle comment input change
   const onCommentChange = (e) => {
